@@ -1,4 +1,4 @@
-BUILD/
-mbed-os/
-.mbed
-mbed-os.lib
+src/BUILD/
+src/mbed-os/
+src/.mbed
+src/mbed-os.lib
