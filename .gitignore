@@ -1,4 +1,4 @@
-nucleo/BUILD/
-nucleo/mbed-os/
-nucleo/.mbed
-nucleo/mbed-os.lib
+BUILD/
+mbed-os/
+.mbed
+mbed-os.lib
