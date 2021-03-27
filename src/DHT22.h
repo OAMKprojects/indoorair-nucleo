@@ -16,8 +16,9 @@
 
 #define NO_ERROR            0
 #define ERR_NO_SENSOR       1
-#define ERR_TIMEOUT         2
-#define ERR_PARITY_BIT      3
+#define ERR_TIMEOUT_1       2
+#define ERR_TIMEOUT_2       3
+#define ERR_PARITY_BIT      4
 
 struct DHT_info
 {
@@ -88,7 +89,7 @@ bool Sensor::wakeSensor()
                 break;
 
             case M_WAIT_SENSOR:
-                if (timeout > T_WAIT_SENSOR) {err_no = ERR_TIMEOUT; return false;}
+                if (timeout > T_WAIT_SENSOR) {err_no = ERR_TIMEOUT_1; return false;}
                 if (dht_sensor->read()) return true;
                 break;
         }
@@ -136,7 +137,7 @@ int Sensor::readValues(DHT_info &info)
         wait_ns(100);
         if (++timeout == T_READ_SENSOR)
         {
-            err_no = ERR_TIMEOUT;
+            err_no = ERR_TIMEOUT_2;
             return false;
         }
 

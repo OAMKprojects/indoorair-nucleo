@@ -2,3 +2,5 @@ src/BUILD/
 src/mbed-os/
 src/.mbed
 src/mbed-os.lib
+src/HCSR04.h
+src/TMP36GZ.h
