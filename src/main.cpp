@@ -15,12 +15,12 @@ int main()
 
         if (error == NO_ERROR || error == ERR_PARITY_BIT)
         {
-            printf("Temperature : %i.%iC Humidity : %i.%i%%\n", 
+            printf("{temperature: %i.%i, humidity: %i.%i}\n", 
                     data.temperature / 10, data.temperature % 10, 
                     data.humidity / 10, data.humidity % 10);
         }
         else {
-            printf("Error nro: %i \n", error);
+            printf("{error: %i}\n", error);
         }
 
         wait_us(1000000);
