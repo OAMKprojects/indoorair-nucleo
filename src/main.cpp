@@ -15,7 +15,7 @@ int main()
 
         if (error == NO_ERROR || error == ERR_PARITY_BIT)
         {
-            printf("{temperature: %i.%i, humidity: %i.%i}\n", 
+            printf("{\"temperature\": %i.%i, \"humidity\": %i.%i}\n", 
                     data.temperature / 10, data.temperature % 10, 
                     data.humidity / 10, data.humidity % 10);
         }
