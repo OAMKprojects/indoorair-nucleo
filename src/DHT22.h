@@ -3,6 +3,7 @@
 
 #include "mbed.h"
 #include <cstdint>
+#include <string>
 
 #define T_WAKE_UP           200
 #define T_WAIT_SENSOR       100
@@ -32,14 +33,15 @@ class Sensor
         Sensor(PinName sda_pin);
         ~Sensor();
 
-        int     readValues(DHT_info &info);
-        int     readPin() {return dht_sensor->read();} 
+        int         readValues(DHT_info &info);
+        int         readPin() {return dht_sensor->read();} 
+        const char *getErrorString();
 
     private:
         bool wakeSensor();
         bool storeBit();
         void checkParity();
-
+        
         DigitalInOut *dht_sensor;
         Timer        timer;
 
@@ -62,6 +64,19 @@ Sensor::Sensor(PinName sda_pin)
 Sensor::~Sensor()
 {
     delete(dht_sensor);
+}
+
+const char *Sensor::getErrorString()
+{
+    const char *error_string[] {
+        "ok",
+        "no sensor",
+        "timeout 1",
+        "timeout 2",
+        "parity bit"
+    };
+
+    return error_string[err_no];
 }
 
 bool Sensor::wakeSensor()

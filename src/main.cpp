@@ -82,30 +82,30 @@ int main()
             }
         }
         #ifdef NTC_SENSOR
-            raw_value = 0;
-            for (int i = 0; i < READ_TIMES; i++) {
-                raw_value += dht.read();
-            }
-            raw_value /= READ_TIMES;
-            ntc_temp = getCelcius(raw_value);
+        raw_value = 0;
+        for (int i = 0; i < READ_TIMES; i++) {
+            raw_value += dht.read();
+        }
+        raw_value /= READ_TIMES;
+        ntc_temp = getCelcius(raw_value);
 
-            if (error == NO_ERROR || error == ERR_PARITY_BIT) {
-                printf("{\"uptime\":\"%llu\",\"temperature\":%i.%i,\"humidity\":%i.%i,\"NTC temperature\":%i.%i,\"NTC resistance\":%i}\n",
-                        uptimer.elapsed_time().count() / 1000000,
-                        data.temperature / 10, data.temperature % 10, 
-                        data.humidity / 10, data.humidity % 10,
-                        (int)ntc_temp, 
-                        abs((int)(ntc_temp * 10) % 10),
-                        (int)R2);
-            }
-            else {
-            printf("{\"uptime\":\"%llu\",\"NTC temperature\":%i.%i,\"NTC resistance\":%i,\"error\":%i}\n",
-                        uptimer.elapsed_time().count() / 1000000,
-                        (int)ntc_temp, 
-                        abs((int)(ntc_temp * 10) % 10),
-                        (int)R2,
-                        error);
-            }
+        if (error == NO_ERROR || error == ERR_PARITY_BIT) {
+            printf("{\"uptime\":\"%llu\",\"temperature\":%i.%i,\"humidity\":%i.%i,\"NTC temperature\":%i.%i,\"NTC resistance\":%i}\n",
+                    uptimer.elapsed_time().count() / 1000000,
+                    data.temperature / 10, data.temperature % 10, 
+                    data.humidity / 10, data.humidity % 10,
+                    (int)ntc_temp, 
+                    abs((int)(ntc_temp * 10) % 10),
+                    (int)R2);
+        }
+        else {
+        printf("{\"uptime\":\"%llu\",\"NTC temperature\":%i.%i,\"NTC resistance\":%i,\"error\":\"%s\"}\n",
+                    uptimer.elapsed_time().count() / 1000000,
+                    (int)ntc_temp, 
+                    abs((int)(ntc_temp * 10) % 10),
+                    (int)R2,
+                    temp_sensor.getErrorString());
+        }
         #else
         if (error == NO_ERROR || error == ERR_PARITY_BIT)
         {
@@ -116,7 +116,7 @@ int main()
                     data.humidity / 10, data.humidity % 10);
         }
         else {
-            printf("{\"error\":%i}\n", error);
+            printf("{\"error\":\"%s\"}\n", temp_sensor.getErrorString());
         }
         #endif // NTC_SENSOR
         #else
@@ -128,7 +128,7 @@ int main()
                     data.humidity / 10, data.humidity % 10);
         }
         else {
-            printf("{\"error\": %i}\n", error);
+            printf("{\"error\":\"%s\"}\n", temp_sensor.getErrorString());
         }
         #endif // ADMIN_APP
         wait_us(1000000);
